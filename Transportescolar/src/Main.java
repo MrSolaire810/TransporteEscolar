@@ -69,17 +69,17 @@ public class Main {
             objAluno.setSalaAluno(entrada.nextLine());
 
             String nomeResponsavel = "";
-            WaitForInput(entrada, "Informe o nome completo do responsável:", 
+            nomeResponsavel = WaitForInput(entrada, "Informe o nome completo do responsável:", 
                 nomeResponsavel, x -> !objAluno.validarNomeResponsavel(x), "Nome inválido! Use apenas letras.");
             objAluno.setNomeResponsavel(nomeResponsavel);
 
             String cpf = "";
-            WaitForInput(entrada, "Informe o CPF do responsável: (formato: 000.000.000-00)", 
+            cpf = WaitForInput(entrada, "Informe o CPF do responsável: (formato: 000.000.000-00)", 
                 cpf, x -> !objAluno.validarCPF(x), "CPF inválido! Use o formato 000.000.000-00");
             objAluno.setCpfResponsavel(cpf);
 
             String telefone = "";
-            WaitForInput(entrada, "Informe o telefone do responsável, com DDD: (formato: 00 00000-0000)", 
+            telefone = WaitForInput(entrada, "Informe o telefone do responsável, com DDD: (formato: 00 00000-0000)", 
                 telefone, x -> !objAluno.validarTelefone(x), "CPF inválido! Use o formato 000.000.000-00");
             objAluno.setTelefoneResponsavel(telefone);
 
