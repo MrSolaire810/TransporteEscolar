@@ -2,31 +2,33 @@ import entities.Aluno;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class Main {
+    static String WaitForInput(Scanner scanner, String message, String value, Function<String, Boolean> errorCondition, String errorMessage){
+        System.out.println(message);
+        value = scanner.nextLine();
+        while (errorCondition.apply(value)){
+            System.out.println(errorMessage);
+            value = scanner.nextLine();
+        }
+        return value;
+    }
     public static void main(String[] args) {
-
         String opcaoCadastro;
         Scanner entrada = new Scanner(System.in);
-
+        
         do {
             Aluno objAluno = new Aluno();
-
-            System.out.println("Informe o nome completo do aluno:");
-            String nomeAluno = entrada.nextLine();
-            while (!objAluno.validarNomeAluno(nomeAluno)) {
-                System.out.println("Nome inválido! Use apenas letras.");
-                nomeAluno = entrada.nextLine();
-            }
+            
+            String nomeAluno = "";
+            nomeAluno = WaitForInput(entrada, "Informe o nome completo do aluno:", 
+                nomeAluno, x -> !objAluno.validarNomeAluno(x), "Nome inválido! Use apenas letras.");
             objAluno.setNomeAluno(nomeAluno);
 
-            String dataNascimento;
-            do {
-                System.out.println("Informe a data de nascimento do aluno: (formato: DD/MM/AAAA)");
-                dataNascimento = entrada.nextLine();
-                if (!objAluno.validarNascimento(dataNascimento))
-                    System.out.println("Data inválida! Use o formato DD/MM/AAAA");
-            } while (!objAluno.validarNascimento(dataNascimento));
+            String dataNascimento = "";
+            dataNascimento = WaitForInput(entrada, "Informe a data de nascimento do aluno: (formato: DD/MM/AAAA)",
+                dataNascimento, x -> !objAluno.validarNascimento(x), "Data inválida! Use o formato DD/MM/AAAA");
             objAluno.setDataNascimentoAluno(dataNascimento);
 
             System.out.println("Selecione a escola do Aluno:");
@@ -66,35 +68,23 @@ public class Main {
             System.out.println("Informe a sala do Aluno:");
             objAluno.setSalaAluno(entrada.nextLine());
 
-            System.out.println("Informe o nome completo do responsável:");
-            String nomeResponsavel = entrada.nextLine();
-            while (!objAluno.validarNomeResponsavel(nomeResponsavel)) {
-                System.out.println("Nome inválido! Use apenas letras.");
-                nomeResponsavel = entrada.nextLine();
-            }
+            String nomeResponsavel = "";
+            WaitForInput(entrada, "Informe o nome completo do responsável:", 
+                nomeResponsavel, x -> !objAluno.validarNomeResponsavel(x), "Nome inválido! Use apenas letras.");
             objAluno.setNomeResponsavel(nomeResponsavel);
 
-            String cpf;
-            do {
-                System.out.println("Informe o CPF do responsável: (formato: 000.000.000-00)");
-                cpf = entrada.nextLine();
-                if (!objAluno.validarCPF(cpf))
-                    System.out.println("CPF inválido! Use o formato 000.000.000-00");
-            } while (!objAluno.validarCPF(cpf));
+            String cpf = "";
+            WaitForInput(entrada, "Informe o CPF do responsável: (formato: 000.000.000-00)", 
+                cpf, x -> !objAluno.validarCPF(x), "CPF inválido! Use o formato 000.000.000-00");
             objAluno.setCpfResponsavel(cpf);
 
-            String telefone;
-            do {
-                System.out.println("Informe o telefone do responsável, com DDD: (formato: 00 00000-0000)");
-                telefone = entrada.nextLine();
-                if (!objAluno.validarTelefone(telefone))
-                    System.out.println("Número inválido! Use o formato 00 00000-0000");
-            } while (!objAluno.validarTelefone(telefone));
+            String telefone = "";
+            WaitForInput(entrada, "Informe o telefone do responsável, com DDD: (formato: 00 00000-0000)", 
+                telefone, x -> !objAluno.validarTelefone(x), "CPF inválido! Use o formato 000.000.000-00");
             objAluno.setTelefoneResponsavel(telefone);
 
             System.out.println("Informe o endereço do aluno: (Formato: Rua, número, bairro, CEP)");
             objAluno.setEnderecoAluno(entrada.nextLine());
-
 
             System.out.println("Selecione a escola/endereço:");
             System.out.println("1 - Emei Monjolo - R. Calixto de Almeida, 442 A - Jardim Monjolo, São Paulo - SP, 02961-000");
@@ -158,13 +148,9 @@ public class Main {
                 }
             } while (opcaoPagamento < 1 || opcaoPagamento > 4);
 
-            String dataInicio;
-            do {
-                System.out.println("Informe a data de início de contrato: (formato: DD/MM/AAAA)");
-                dataInicio = entrada.nextLine();
-                if (!objAluno.validarInicio(dataInicio))
-                    System.out.println("Data inválida! Use o formato DD/MM/AAAA");
-            } while (!objAluno.validarInicio(dataInicio));
+            String dataInicio = "";
+            dataInicio = WaitForInput(entrada, "Informe a data de início de contrato: (formato: DD/MM/AAAA)", 
+                dataInicio, x -> !objAluno.validarInicio(x), "Data inválida Use o formato DD/MM/AAAA");
             objAluno.setDataInicioContrato(dataInicio);
 
             System.out.println("Deseja cadastrar outro aluno? (S/N)");
